@@ -21,11 +21,4 @@ tasks.withType(JavaCompile) {
 
 tasks.withType(Test) {
     useJUnitPlatform()
-
-    testLogging {
-        lifecycle{
-            events "started", "skipped", "standart_error", "standart_out"
-            exceptionFormat "short"
-        }
-    }
 }
