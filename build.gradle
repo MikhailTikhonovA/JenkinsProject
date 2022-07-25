@@ -1,5 +1,14 @@
+buildscript {
+    dependencies {
+        classpath 'com.palantir.javaformat:gradle-palantir-java-format:<version>'
+    }
+}
+
 plugins {
     id 'java'
+    id "io.qameta.allure" version "2.9.6"
+    id "com.palantir.java-format-spotless" version "2.25.0"
+
 }
 
 group 'org.example'
@@ -9,11 +18,30 @@ repositories {
     mavenCentral()
 }
 
+def allureVersion = "2.17.3"
+
+allure{
+    report{
+        version.set(allureVersion)
+    }
+    adapter{
+        aspectjWeaver.set(true)
+        frameworks{
+            junit5{
+                adapterVersion.set(allureVersion)
+            }
+        }
+    }
+}
+
+allprojects {
+    apply plugin: 'com.palantir.java-format'
+}
+
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testImplementation 'com.codeborne:selenide:6.6.6'
     testImplementation 'org.assertj:assertj-core:3.23.1'
-    testImplementation 'com.github.fowlie:gradle-jenkins-test:0.3'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 tasks.withType(JavaCompile) {
