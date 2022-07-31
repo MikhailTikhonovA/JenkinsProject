@@ -52,3 +52,11 @@ tasks.withType(JavaCompile) {
 tasks.withType(Test) {
     useJUnitPlatform()
 }
+
+test {
+    String itags = System.getProperty("includeTags") ?
+            System.getProperty("includeTags") : 'regression';
+    useJUnitPlatform{
+        includeTags  itags
+    }
+}
